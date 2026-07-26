@@ -1,10 +1,16 @@
+import time
+
 import pandas as pd
 from cachetools import TTLCache
 
 from app.config import CACHE_TTL_SECONDS, TICKERS, Ticker
 from app.services.fetcher import fetch_prices
 
-_cache: TTLCache = TTLCache(maxsize=len(TICKERS), ttl=CACHE_TTL_SECONDS)
+# cachetools' default timer binds time.monotonic at import, before freezegun
+# can patch it — this lambda does a live lookup instead, so tests can mock it.
+_cache: TTLCache = TTLCache(
+    maxsize=len(TICKERS), ttl=CACHE_TTL_SECONDS, timer=lambda: time.monotonic()
+)
 
 
 async def get_prices(tickers: list[Ticker]) -> dict[Ticker, pd.Series | Exception]:

@@ -22,9 +22,10 @@ def _make_history(dates: list[str], closes: list[float]) -> pd.DataFrame:
 @pytest.fixture
 def patch_yf_ticker(monkeypatch):
     def _patch(history_for_symbol):
-        monkeypatch.setattr(
-            fetcher.yf, "Ticker", lambda symbol: _FakeTicker(history_for_symbol(symbol))
-        )
+        def fake_ticker(symbol):
+            return _FakeTicker(history_for_symbol(symbol))
+
+        monkeypatch.setattr(fetcher.yf, "Ticker", fake_ticker)
 
     return _patch
 

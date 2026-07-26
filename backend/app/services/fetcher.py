@@ -19,4 +19,4 @@ def _fetch_one(ticker: Ticker) -> pd.Series:
 async def fetch_prices(tickers: list[Ticker]) -> dict[Ticker, pd.Series | Exception]:
     tasks = [asyncio.to_thread(_fetch_one, ticker) for ticker in tickers]
     results = await asyncio.gather(*tasks, return_exceptions=True)
-    return dict(zip(tickers, results))
+    return dict(zip(tickers, results, strict=True))

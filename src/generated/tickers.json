@@ -1,0 +1,30 @@
+[
+  {
+    "code": "MSFT",
+    "title": "Microsoft"
+  },
+  {
+    "code": "AAPL",
+    "title": "Apple"
+  },
+  {
+    "code": "GOOGL",
+    "title": "Alphabet"
+  },
+  {
+    "code": "AMZN",
+    "title": "Amazon"
+  },
+  {
+    "code": "NVDA",
+    "title": "NVIDIA"
+  },
+  {
+    "code": "META",
+    "title": "Meta"
+  },
+  {
+    "code": "TSLA",
+    "title": "Tesla"
+  }
+]

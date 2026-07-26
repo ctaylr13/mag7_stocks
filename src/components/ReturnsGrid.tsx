@@ -17,16 +17,22 @@ const findTickerData = (data: TickerReturns[], code: string): TickerReturns | un
 interface ReturnsGridProps {
   data: TickerReturns[] | undefined;
   loading: boolean;
+  visibleCodes: Set<string>;
 }
 
-export const ReturnsGrid = ({ data, loading }: ReturnsGridProps) => (
-  <Grid>
-    {tickers.map(({ code, title }) =>
-      loading || !data ? (
-        <LoadingState key={code} />
-      ) : (
-        <TickerCard key={code} code={code} title={title} data={findTickerData(data, code)} />
-      ),
-    )}
-  </Grid>
-);
+export const ReturnsGrid = ({ data, loading, visibleCodes }: ReturnsGridProps) => {
+  const showSkeleton = loading || !data;
+  const visibleTickers = tickers.filter(({ code }) => visibleCodes.has(code));
+
+  return (
+    <Grid>
+      {visibleTickers.map(({ code, title }) =>
+        showSkeleton ? (
+          <LoadingState key={code} />
+        ) : (
+          <TickerCard key={code} code={code} title={title} data={findTickerData(data, code)} />
+        ),
+      )}
+    </Grid>
+  );
+};

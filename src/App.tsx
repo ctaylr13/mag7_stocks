@@ -3,6 +3,7 @@ import { Dashboard } from "./components/Dashboard";
 import { useReturnsData } from "./hooks/useReturnsData";
 import { useDateRange } from "./hooks/useDateRange";
 import { useTheme } from "./hooks/useTheme";
+import { useTickerVisibility } from "./hooks/useTickerVisibility";
 import { spacing } from "./tokens";
 
 const Page = styled.div`
@@ -16,6 +17,7 @@ const App = () => {
   const { start, end, setRange } = useDateRange();
   const { data, loading, error } = useReturnsData(start, end);
   const { theme, toggleTheme } = useTheme();
+  const { visibleCodes, toggleTicker } = useTickerVisibility();
 
   return (
     <Page>
@@ -28,6 +30,8 @@ const App = () => {
         error={error}
         theme={theme}
         onToggleTheme={toggleTheme}
+        visibleCodes={visibleCodes}
+        onToggleTicker={toggleTicker}
       />
     </Page>
   );

@@ -26,11 +26,17 @@ export const useReturnsData = (start: string, end: string): UseReturnsDataResult
 
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  // fetchError cleared (new range succeeded) — reset during render, not in an effect
+  const [prevFetchError, setPrevFetchError] = useState(fetchError);
+  if (fetchError !== prevFetchError) {
+    setPrevFetchError(fetchError);
     if (!fetchError) {
       setError(null);
-      return;
     }
+  }
+
+  useEffect(() => {
+    if (!fetchError) return;
 
     let cancelled = false;
 

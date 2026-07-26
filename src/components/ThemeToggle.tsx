@@ -1,20 +1,6 @@
-import { styled } from "@linaria/react";
 import { Moon, Sun } from "lucide-react";
+import { Button } from "./Button";
 import type { Theme } from "../hooks/useTheme";
-import { colors, font, radius, spacing } from "../tokens";
-
-const Button = styled.button`
-  display: flex;
-  align-items: center;
-  gap: ${spacing.xs};
-  background: ${colors.surface};
-  border: 1px solid ${colors.border};
-  border-radius: ${radius.md};
-  padding: ${spacing.xs} ${spacing.sm};
-  color: ${colors.text};
-  font-size: ${font.size.label};
-  cursor: pointer;
-`;
 
 const ICON_SIZE = 14;
 

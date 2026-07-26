@@ -1,9 +1,21 @@
+import { styled } from "@linaria/react";
 import { Header } from "./Header";
 import { DateRangePicker } from "./DateRangePicker";
 import { ErrorBanner } from "./ErrorBanner";
+import { TickerToggleBar } from "./TickerToggleBar";
 import { ReturnsGrid } from "./ReturnsGrid";
 import type { TickerReturns } from "../types";
 import type { Theme } from "../hooks/useTheme";
+import { spacing } from "../tokens";
+
+const ControlsRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: ${spacing.lg};
+  padding-bottom: ${spacing.lg};
+`;
 
 interface DashboardProps {
   start: string;
@@ -14,6 +26,8 @@ interface DashboardProps {
   error: string | null;
   theme: Theme;
   onToggleTheme: () => void;
+  visibleCodes: Set<string>;
+  onToggleTicker: (code: string) => void;
 }
 
 export const Dashboard = ({
@@ -25,11 +39,16 @@ export const Dashboard = ({
   error,
   theme,
   onToggleTheme,
+  visibleCodes,
+  onToggleTicker,
 }: DashboardProps) => (
   <>
     <Header start={start} end={end} theme={theme} onToggleTheme={onToggleTheme} />
-    <DateRangePicker start={start} end={end} onChange={onChangeRange} />
+    <ControlsRow>
+      <DateRangePicker start={start} end={end} onChange={onChangeRange} />
+      <TickerToggleBar visibleCodes={visibleCodes} onToggle={onToggleTicker} />
+    </ControlsRow>
     {error && <ErrorBanner message={error} />}
-    <ReturnsGrid data={data} loading={loading} />
+    <ReturnsGrid data={data} loading={loading} visibleCodes={visibleCodes} />
   </>
 );

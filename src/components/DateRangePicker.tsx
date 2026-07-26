@@ -5,7 +5,6 @@ const Wrapper = styled.div`
   display: flex;
   gap: ${spacing.md};
   align-items: center;
-  padding-bottom: ${spacing.lg};
   font-size: ${font.size.label};
   color: ${colors.textMuted};
 `;

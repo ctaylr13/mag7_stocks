@@ -17,6 +17,9 @@ __pycache__/
 *.py[cod]
 backend/.venv/
 *.db
+backend/openapi.json
+.pytest_cache/
+.ruff_cache/
 
 PLAN.md
 

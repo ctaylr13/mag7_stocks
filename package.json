@@ -1,5 +1,5 @@
 {
-  "name": "live-chat",
+  "name": "mag7-returns-viewer",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "gen:openapi": "PYTHONPATH=backend backend/.venv/bin/python backend/scripts/export_openapi.py && npx openapi-typescript backend/openapi.json -o src/types/api.d.ts",
+    "gen:tickers": "PYTHONPATH=backend backend/.venv/bin/python backend/scripts/export_tickers.py",
+    "gen": "npm run gen:openapi && npm run gen:tickers"
   },
   "dependencies": {
     "@linaria/core": "^7.0.0",
@@ -28,6 +31,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.6.0",
+    "openapi-typescript": "^7.4.0",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.59.2",
     "vite": "^8.0.12"

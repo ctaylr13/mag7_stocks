@@ -13,6 +13,7 @@ class ReturnPoint(BaseModel):
 
 
 class TickerReturns(BaseModel):
+    ticker: Ticker
     points: list[ReturnPoint] = []
     min: float | None = None
     max: float | None = None
@@ -20,4 +21,4 @@ class TickerReturns(BaseModel):
     error: str | None = None
 
 
-ReturnsResponse = dict[Ticker, TickerReturns]
+ReturnsResponse = list[TickerReturns]

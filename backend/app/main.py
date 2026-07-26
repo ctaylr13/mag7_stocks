@@ -1,7 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI(title="mag7-returns-viewer")
+from app.routers.returns import router as returns_router
+
+app = FastAPI(title="MAG7 Interactive Return Viewer")
 
 app.add_middleware(
     CORSMiddleware,
@@ -9,6 +11,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(returns_router)
 
 
 @app.get("/api/health")

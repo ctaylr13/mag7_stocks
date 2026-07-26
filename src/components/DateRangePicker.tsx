@@ -23,6 +23,20 @@ const Input = styled.input`
   color: ${colors.text};
 `;
 
+interface DateFieldProps {
+  label: string;
+  value: string;
+  constraint: { min?: string; max?: string };
+  onChange: (value: string) => void;
+}
+
+const DateField = ({ label, value, constraint, onChange }: DateFieldProps) => (
+  <Label>
+    {label}
+    <Input type="date" value={value} {...constraint} onChange={(e) => onChange(e.target.value)} />
+  </Label>
+);
+
 interface DateRangePickerProps {
   start: string;
   end: string;
@@ -31,13 +45,17 @@ interface DateRangePickerProps {
 
 export const DateRangePicker = ({ start, end, onChange }: DateRangePickerProps) => (
   <Wrapper>
-    <Label>
-      Start
-      <Input type="date" value={start} max={end} onChange={(e) => onChange(e.target.value, end)} />
-    </Label>
-    <Label>
-      End
-      <Input type="date" value={end} min={start} onChange={(e) => onChange(start, e.target.value)} />
-    </Label>
+    <DateField
+      label="Start"
+      value={start}
+      constraint={{ max: end }}
+      onChange={(value) => onChange(value, end)}
+    />
+    <DateField
+      label="End"
+      value={end}
+      constraint={{ min: start }}
+      onChange={(value) => onChange(start, value)}
+    />
   </Wrapper>
 );

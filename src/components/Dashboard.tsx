@@ -4,8 +4,10 @@ import { DateRangePicker } from "./DateRangePicker";
 import { ErrorBanner } from "./ErrorBanner";
 import { TickerToggleBar } from "./TickerToggleBar";
 import { ReturnsGrid } from "./ReturnsGrid";
+import { SummaryTable } from "./SummaryTable";
 import type { TickerReturns } from "../types";
 import type { Theme } from "../hooks/useTheme";
+import type { View } from "./ViewToggle";
 import { spacing } from "../tokens";
 
 const ControlsRow = styled.div`
@@ -28,6 +30,8 @@ interface DashboardProps {
   onToggleTheme: () => void;
   visibleCodes: Set<string>;
   onToggleTicker: (code: string) => void;
+  view: View;
+  onChangeView: (view: View) => void;
 }
 
 export const Dashboard = ({
@@ -41,14 +45,27 @@ export const Dashboard = ({
   onToggleTheme,
   visibleCodes,
   onToggleTicker,
+  view,
+  onChangeView,
 }: DashboardProps) => (
   <>
-    <Header start={start} end={end} theme={theme} onToggleTheme={onToggleTheme} />
+    <Header
+      start={start}
+      end={end}
+      theme={theme}
+      onToggleTheme={onToggleTheme}
+      view={view}
+      onChangeView={onChangeView}
+    />
     <ControlsRow>
       <DateRangePicker start={start} end={end} onChange={onChangeRange} />
       <TickerToggleBar visibleCodes={visibleCodes} onToggle={onToggleTicker} />
     </ControlsRow>
     {error && <ErrorBanner message={error} />}
-    <ReturnsGrid data={data} loading={loading} visibleCodes={visibleCodes} />
+    {view === "grid" ? (
+      <ReturnsGrid data={data} loading={loading} visibleCodes={visibleCodes} />
+    ) : (
+      <SummaryTable data={data} visibleCodes={visibleCodes} />
+    )}
   </>
 );

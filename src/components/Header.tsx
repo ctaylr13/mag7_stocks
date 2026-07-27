@@ -1,6 +1,8 @@
 import { styled } from "@linaria/react";
 import { ThemeToggle } from "./ThemeToggle";
+import { ViewToggle } from "./ViewToggle";
 import type { Theme } from "../hooks/useTheme";
+import type { View } from "./ViewToggle";
 import { colors, font, spacing } from "../tokens";
 
 const Row = styled.div`
@@ -18,6 +20,7 @@ const ToggleSlot = styled.div`
   grid-column: 3;
   display: flex;
   justify-content: flex-end;
+  gap: ${spacing.sm};
 `;
 
 const Title = styled.h1`
@@ -35,9 +38,11 @@ interface HeaderProps {
   end: string;
   theme: Theme;
   onToggleTheme: () => void;
+  view: View;
+  onChangeView: (view: View) => void;
 }
 
-export const Header = ({ start, end, theme, onToggleTheme }: HeaderProps) => (
+export const Header = ({ start, end, theme, onToggleTheme, view, onChangeView }: HeaderProps) => (
   <Row>
     <TitleBlock>
       <Title>MAG7 Interactive Return Viewer</Title>
@@ -46,6 +51,7 @@ export const Header = ({ start, end, theme, onToggleTheme }: HeaderProps) => (
       </Subtitle>
     </TitleBlock>
     <ToggleSlot>
+      <ViewToggle view={view} onChange={onChangeView} />
       <ThemeToggle theme={theme} onToggle={onToggleTheme} />
     </ToggleSlot>
   </Row>

@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { styled } from "@linaria/react";
 import { Dashboard } from "./components/Dashboard";
+import type { View } from "./components/ViewToggle";
 import { useReturnsData } from "./hooks/useReturnsData";
 import { useDateRange } from "./hooks/useDateRange";
 import { useTheme } from "./hooks/useTheme";
@@ -18,6 +20,7 @@ const App = () => {
   const { data, loading, error } = useReturnsData(start, end);
   const { theme, toggleTheme } = useTheme();
   const { visibleCodes, toggleTicker } = useTickerVisibility();
+  const [view, setView] = useState<View>("grid");
 
   return (
     <Page>
@@ -32,6 +35,8 @@ const App = () => {
         onToggleTheme={toggleTheme}
         visibleCodes={visibleCodes}
         onToggleTicker={toggleTicker}
+        view={view}
+        onChangeView={setView}
       />
     </Page>
   );

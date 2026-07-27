@@ -3,6 +3,7 @@ import tickers from "../generated/tickers.json";
 import type { TickerReturns } from "../types";
 import { TickerCard } from "./TickerCard";
 import { LoadingState } from "./LoadingState";
+import { findTickerData } from "../utils/findTickerData";
 import { sizes, spacing } from "../tokens";
 
 const Grid = styled.div`
@@ -10,9 +11,6 @@ const Grid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(${sizes.cardMinWidth}, 1fr));
   gap: ${spacing.md};
 `;
-
-const findTickerData = (data: TickerReturns[], code: string): TickerReturns | undefined =>
-  data.find((entry) => entry.ticker === code);
 
 interface ReturnsGridProps {
   data: TickerReturns[] | undefined;
